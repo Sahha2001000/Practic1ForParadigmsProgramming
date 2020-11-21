@@ -1,33 +1,21 @@
 from threading import Thread
 
-threadID = 1
+
+def logThread(word, threadID):
+    print(f'Thread started: {threadID}')
+    word = "".join(word)
+    print(f"Argument: {word}")
+    print(f'Thread finished: {threadID}\n')
 
 
-def sequenceToArguments(*sequence):
-    global threadID
-    sequence = list(sequence)
-    print(f"Thread {threadID} started\n")
-    for i in sequence:
-        print(i)
-    print(f"Thread {threadID} ended\n")
-    threadID += 1
+threads = []
+words = ['KEY', 'NEW', 'BOOK', 'SAD']
+print(f"{words}\n")
 
-
-sequenceWord = input("Enter your str sequenc, please: ")
-
-thread_1 = Thread(target=sequenceToArguments, args=(sequenceWord))
-thread_2 = Thread(target=sequenceToArguments, args=(sequenceWord))
-thread_3 = Thread(target=sequenceToArguments, args=(sequenceWord))
-thread_4 = Thread(target=sequenceToArguments, args=(sequenceWord))
-
-thread_1.start()
-thread_1.join()
-
-thread_2.start()
-thread_2.join()
-
-thread_3.start()
-thread_3.join()
-
-thread_4.start()
-thread_4.join()
+i = 1
+for word in words:
+    thread_n = Thread(target=logThread, args=(word, i))
+    threads.append(thread_n)
+    thread_n.start()
+    thread_n.join()
+    i += 1
